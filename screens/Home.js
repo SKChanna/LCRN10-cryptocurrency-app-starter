@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
     StyleSheet,
     View,
@@ -7,13 +7,21 @@ import {
     FlatList,
     TouchableOpacity,
     Image,
-    ImageBackground
+    ImageBackground,
+    LogBox
 } from 'react-native';
 import  {dummyData, COLORS, SIZES, FONTS, icons, images} from "../constants";
+import {transactionHistory} from "../constants/dummy";
+import {color} from "react-native-reanimated";
 
 const Home = ({ navigation }) => {
 
     const [trending, setTrending] = useState(dummyData.trendingCurrencies);
+    const [transactionHistory, setTransactionHistory] = React.useState(dummyData.transactionHistory);
+
+    useEffect(() => {
+      LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
+    }, []);
 
     const renderItem = ({item, index}) => (
       <TouchableOpacity
@@ -133,6 +141,74 @@ const Home = ({ navigation }) => {
 
                         </View>
                     </ImageBackground>
+                </View>
+
+                <View
+                  style={{
+                    marginTop: SIZES.base * 12,
+                    marginHorizontal: SIZES.padding,
+                    padding: 20,
+                    borderRadius: SIZES.radius,
+                    backgroundColor: COLORS.white,
+                    ...styles.shadow
+                  }}
+                >
+
+                  <Text style={{...FONTS.h2 }}>Transaction History</Text>
+                  <FlatList
+                    contentContainerStyle={{ marginTop: SIZES.radius }}
+                    scrollEnabled={false}
+                    data={transactionHistory}
+                    keyExtractor={item => `${item.id}`}
+                    renderItem={({item}) => (
+                      <TouchableOpacity
+                        style={{
+                          flexDirection: 'row',
+                          alignItems: 'center',
+                          paddingVertical: SIZES.base
+                        }}
+                        onPress={() => console.log(item)}
+                      >
+                        <Image
+                          source={icons.transaction}
+                          style={{
+                            width: 30,
+                            height: 30,
+                            tintColor: COLORS.primary
+                          }}
+                        />
+                        <View style={{ flex: 1, marginLeft: SIZES.radius }}>
+                          <Text style={{ ...FONTS.h3,  }} >{item.description}</Text>
+                          <Text style={{ color: COLORS.gray, ...FONTS.body4 }} >{item.date}</Text>
+                        </View>
+
+                        <View
+                          style={{
+                            flexDirection: 'row',
+                            alignItems: 'center',
+                            heigth: '100%'
+                          }}
+                        >
+                          <Text style={{ color: item.type == 'B' ? COLORS.green : COLORS.black, ...FONTS.h3 }} >{item.amount} {item.current}</Text>
+                          <Image
+                            source={icons.right_arrow}
+                            style={{
+                              width: 20,
+                              height: 20,
+                              tintColor: COLORS.gray
+                            }}
+                          />
+                        </View>
+
+                      </TouchableOpacity>
+                    )}
+                    showVerticalScrollIndicator={false}
+                    ItemSeparatorComponent={() => {
+                      return (
+                        <View style={{ width: "100%", height: 1, backgroundColor: COLORS.lightGray }} />
+                      )
+                    }}
+                  />
                 </View>
             </View>
         </ScrollView>
