@@ -3,9 +3,10 @@ import { CryptoDetail, Transaction } from "./screens";
 import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from '@react-navigation/native';
 import SplashScreen from 'react-native-splash-screen'
-
+import LinearGradient from "react-native-linear-gradient";
 
 import Tabs from "./navigation/tabs";
+import {COLORS} from "./constants";
 
 const Stack = createStackNavigator();
 
