@@ -25,3 +25,7 @@ export const serviceGetBalance = async (data) => {
   const response = await request('post', apis.GET_BALANCE, data);
   return response;
 };
+export const serviceGetAccountHeads = async () => {
+  const response = await request('get', apis.ACCOUNT_HEADS);
+  return response;
+};

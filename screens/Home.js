@@ -15,142 +15,197 @@ import  {dummyData, COLORS, SIZES, FONTS, icons, images} from "../constants";
 import {transactionHistory} from "../constants/dummy";
 import {color} from "react-native-reanimated";
 import TransactionHistory from "../components/TransactionHistory";
+import moment from "moment";
+import {generateGeneralLedger} from "../apiServices/apiController";
+import {useDispatch, useSelector} from "react-redux";
+import * as dashboardStore from '../store/dashboard';
+import {serviceGetAccountHeads} from "../apiServices/apiServices";
+
 
 const Home = ({ navigation }) => {
+  const dispatch = useDispatch();
 
-    const [trending, setTrending] = useState(dummyData.trendingCurrencies);
-    const [transactionHistory, setTransactionHistory] = React.useState(dummyData.transactionHistory);
+  const [trending, setTrending] = useState(dummyData.trendingCurrencies);
+  const cashLedger = useSelector(dashboardStore.cashLedger);
+  const cashOpeningBalance = useSelector(dashboardStore.cashOpeningBalance);
+  const cashCurrentBalance = useSelector(dashboardStore.cashBalance);
+  const generalAccounts = useSelector(dashboardStore.generalAccounts);
 
-    useEffect(() => {
-      LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
-    }, []);
+  const getDashboardData = async () => {
 
-    const renderItem = ({item, index}) => (
-      <TouchableOpacity
-        style={{
-            width: 150,
-            paddingVertical: SIZES.padding - 5,
-            paddingHorizontal: SIZES.padding - 5,
-            marginLeft: index === 0 ? SIZES.padding : 0,
-            marginRight: SIZES.radius,
-            marginBottom: SIZES.padding - 15,
-            borderRadius: 10,
-            backgroundColor: COLORS.white,
-            ...styles.shadow
-        }}
-        onPress={() => navigation.navigate("Transaction")}
-      >
-          {/* Currency */}
-          <View style={{flexDirection: 'row'}}>
-              <View>
-                  <Image
-                      source={item.image}
-                      resizeMode="cover"
-                      style={{
-                          marginTop: 3,
-                          width: 22,
-                          height: 22
-                      }}
-                  />
-              </View>
-              <View style={{ marginLeft: SIZES.base }}>
-                  <Text style={{ ...FONTS.h3 }}>{item.currency}</Text>
-                  <Text style={{ color: COLORS.gray, ...FONTS.body4 }}>{item.code}</Text>
-              </View>
+    dispatch(dashboardStore.setLoading(true));
+    const ledgerData = await generateGeneralLedger({id: 6, accountType: "DR", start: new Date('2021-09-01T00:00:00.000Z'), end: new Date()});
+    dispatch(dashboardStore.setCashLedger(ledgerData));
+
+    dispatch(dashboardStore.setLoading(true));
+    const AccountHeads = await serviceGetAccountHeads();
+    if (AccountHeads && AccountHeads.data)
+      dispatch(dashboardStore.setGeneralAccounts(AccountHeads.data));
+
+  }
+
+  useEffect(() => {
+    LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
+    getDashboardData();
+  }, []);
+
+  useEffect(() => {
+    console.log({generalAccounts});
+  }, [generalAccounts]);
+
+  const renderItem = ({item, index}) => (
+    <TouchableOpacity
+      style={{
+          width: 150,
+          paddingVertical: SIZES.padding - 5,
+          paddingHorizontal: SIZES.padding - 5,
+          marginLeft: index === 0 ? SIZES.padding : 0,
+          marginRight: SIZES.radius,
+          marginBottom: SIZES.padding - 15,
+          borderRadius: 10,
+          backgroundColor: COLORS.white,
+          ...styles.shadow
+      }}
+      onPress={() => navigation.navigate("Transaction")}
+    >
+        {/* Currency */}
+        <View style={{flexDirection: 'row'}}>
+            <View>
+                {/*<Image*/}
+                {/*    source={item.image}*/}
+                {/*    resizeMode="cover"*/}
+                {/*    style={{*/}
+                {/*        marginTop: 3,*/}
+                {/*        width: 22,*/}
+                {/*        height: 22*/}
+                {/*    }}*/}
+                {/*/>*/}
+            </View>
+            <View style={{ marginLeft: SIZES.base }}>
+                <Text style={{ ...FONTS.h3 }}>{item.accountName}</Text>
+                <Text style={{ color: COLORS.gray, ...FONTS.body5 }}>{item.accountDescription}</Text>
+            </View>
+        </View>
+
+        {/* Value */}
+        <View style={{ marginTop: SIZES.radius }}>
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'center'
+            }}
+          >
+            <Text style={{marginTop: SIZES.base, color: COLORS.green, ...FONTS.h4}} > Debit </Text>
+            <Text style={{marginTop: SIZES.base, color: COLORS.green, ...FONTS.h3}} > {item.debit} </Text>
           </View>
-
-          {/* Value */}
-          <View style={{ marginTop: SIZES.radius }}>
-              <Text style={{ ...FONTS.h3 }}>${item.amount}</Text>
-              <Text style={{ color: item.type == 'I' ? COLORS.green : COLORS.red, ...FONTS.h4 }}>${item.amount}</Text>
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'center'
+            }}
+          >
+            <Text style={{marginTop: SIZES.base, color: COLORS.white, ...FONTS.h4}} > credit </Text>
+            <Text style={{marginTop: SIZES.base, color: COLORS.white, ...FONTS.h3}} > {item.credit} </Text>
           </View>
-      </TouchableOpacity>
-    );
+        </View>
+    </TouchableOpacity>
+  );
 
-    return (
-        <ScrollView>
-            <View style={{flex: 1}}>
-              <View
-                style={{
-                    width: '100%',
-                    height: 290,
-                    ...styles.shadow
-                }}
-              >
-                  <ImageBackground
-                    source={images.banner}
-                    resizeMode="cover"
-                    style={{
-                        flex: 1,
-                        alignItems: 'center'
-                    }}
-                  >
-                      {/* Header */}
-                      <View
-                          style={{
-                              marginTop: SIZES.padding,
-                              width: "100%",
-                              alignItems: "flex-end",
-                              paddingHorizontal: SIZES.padding
-                          }}
-                      >
-                      <TouchableOpacity
+  return (
+      <ScrollView>
+          <View style={{flex: 1}}>
+            <View
+              style={{
+                  width: '100%',
+                  height: 290,
+                  ...styles.shadow
+              }}
+            >
+                <ImageBackground
+                  source={images.banner}
+                  resizeMode="cover"
+                  style={{
+                      flex: 1,
+                      alignItems: 'center'
+                  }}
+                >
+                    {/* Header */}
+                    <View
                         style={{
-                            width: 35,
-                            height: 35,
+                            marginTop: SIZES.padding,
+                            width: "100%",
+                            alignItems: "flex-end",
+                            paddingHorizontal: SIZES.padding
+                        }}
+                    >
+                    <TouchableOpacity
+                      style={{
+                          width: 35,
+                          height: 35,
+                          alignItems: 'center',
+                          justifyContent: 'center'
+                      }}
+                    >
+                        <Image
+                            source={icons.notification_white}
+                            resizeMode="contain"
+                            style={{
+                                flex: 1,
+                            }}
+                        />
+                    </TouchableOpacity>
+                    </View>
+
+                    {/* Balance */}
+                    <View
+                        style={{
                             alignItems: 'center',
                             justifyContent: 'center'
                         }}
-                      >
-                          <Image
-                              source={icons.notification_white}
-                              resizeMode="contain"
-                              style={{
-                                  flex: 1,
-                              }}
-                          />
-                      </TouchableOpacity>
-                      </View>
-
-                      {/* Balance */}
+                    >
+                      <Text style={{color: COLORS.white, ...FONTS.h3}} > You Have </Text>
                       <View
-                          style={{
-                              alignItems: 'center',
-                              justifyContent: 'center'
-                          }}
+                        style={{
+                          flexDirection: 'row',
+                          alignItems: 'center',
+                          justifyContent: 'center'
+                        }}
                       >
-                          <Text style={{color: COLORS.white, ...FONTS.h3}} > Your Portfolio Balance </Text>
-                          <Text style={{marginTop: SIZES.base, color: COLORS.white, ...FONTS.h1}} > $203,57.44 </Text>
-                          <Text style={{color: COLORS.white, ...FONTS.body5}} > +20% Last 24 hours </Text>
+                        <Text style={{marginTop: SIZES.base, color: COLORS.white, ...FONTS.h3}} > pkr </Text>
+                        <Text style={{marginTop: SIZES.base, color: COLORS.white, ...FONTS.h1}} > {cashCurrentBalance - cashOpeningBalance} </Text>
                       </View>
+                      <Text style={{color: COLORS.white, ...FONTS.body5}} > {cashOpeningBalance} Opening Balance </Text>
+                    </View>
 
-                      {/* Trending Section */}
-                      <View
-                          style={{
-                              position: 'absolute',
-                              bottom: '-16%'
-                          }}
-                      >
-                          <Text style={{ marginLeft: SIZES.padding, color: COLORS.white, ...FONTS.h3 }}>
-                              Accounts
-                          </Text>
+                    {/* Trending Section */}
+                    <View
+                        style={{
+                            position: 'absolute',
+                            bottom: '-16%'
+                        }}
+                    >
+                        <Text style={{ marginLeft: SIZES.padding, color: COLORS.white, ...FONTS.h3 }}>
+                            Accounts
+                        </Text>
 
-                          <FlatList
-                              contentContainerStyle={{ marginTop: SIZES.base}}
-                              data={trending}
-                              renderItem={renderItem}
-                              keyExtractor={item => `${item.id}`}
-                              horizontal
-                              showsHorizontalScrollIndicator={true}
-                          />
+                        <FlatList
+                            contentContainerStyle={{ marginTop: SIZES.base}}
+                            data={generalAccounts}
+                            renderItem={renderItem}
+                            keyExtractor={item => `${item.id}`}
+                            horizontal
+                            showsHorizontalScrollIndicator={false}
+                        />
 
-                      </View>
-                  </ImageBackground>
-              </View>
-              <TransactionHistory transactionHistory={transactionHistory} height={Dimensions.get('window').height - 510} />
+                    </View>
+                </ImageBackground>
             </View>
-        </ScrollView>
-    )
+            <TransactionHistory data={cashLedger} height={Dimensions.get('window').height - 510} />
+          </View>
+      </ScrollView>
+  )
 }
 
 const styles = StyleSheet.create({

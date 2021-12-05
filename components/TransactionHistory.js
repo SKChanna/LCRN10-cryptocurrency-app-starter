@@ -1,8 +1,9 @@
 import {COLORS, FONTS, icons, SIZES} from "../constants";
 import {Dimensions, FlatList, Image, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import React from "react";
+import moment from "moment";
 
-const TransactionHistory = ({ transactionHistory, height }) => {
+const TransactionHistory = ({ data, height }) => {
 	return (
 		<View
 			style={{
@@ -23,8 +24,8 @@ const TransactionHistory = ({ transactionHistory, height }) => {
 				style={{
 					height
 				}}
-				data={transactionHistory}
-				keyExtractor={item => `${item.id}`}
+				data={data}
+				keyExtractor={item => `${item.invoiceNumber} ${item.description}`}
 				renderItem={({item}) => (
 					<TouchableOpacity
 						style={{
@@ -39,12 +40,12 @@ const TransactionHistory = ({ transactionHistory, height }) => {
 							style={{
 								width: 25,
 								height: 25,
-								tintColor: COLORS.primary
+								tintColor: item.debit == 0 ? COLORS.green : COLORS.red
 							}}
 						/>
 						<View style={{ flex: 1, marginLeft: SIZES.radius }}>
 							<Text style={{ ...FONTS.h4,  }} >{item.description}</Text>
-							<Text style={{ color: COLORS.gray, ...FONTS.body5 }} >{item.date}</Text>
+							<Text style={{ color: COLORS.gray, ...FONTS.body5 }} >{moment(item.date).format('MMMM Do YYYY')}</Text>
 						</View>
 
 						<View
@@ -54,7 +55,7 @@ const TransactionHistory = ({ transactionHistory, height }) => {
 								height: '100%'
 							}}
 						>
-							<Text style={{ color: item.type == 'B' ? COLORS.green : COLORS.black, ...FONTS.h4 }} >{item.amount} </Text>
+							<Text style={{ color: COLORS.black, ...FONTS.h4 }} >{item.debit || item.credit} </Text>
 							<Image
 								source={icons.right_arrow}
 								style={{

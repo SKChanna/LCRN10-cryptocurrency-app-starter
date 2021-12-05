@@ -6,11 +6,12 @@ const request = async (method, url, data = {}, isMultiPart) => {
     baseURL: BASE_URL,
     headers: {
       Authorization:
-        'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTYzOTIzNzMwMn0.R40uoz_KKh3vGD1n-lc5gxLynb1-KxMREfNSu1a_vUU',
+        'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTYzOTU3NDc1Mn0.didbfbMg7xwjz0Ni8zwXK9p6UT9PHEAuqtEiVg-fOpY',
     },
   });
   try {
     let response = null;
+    console.log(`--------- Hitting Server -------`,`${url}`, data);
     if (!isMultiPart) {
       response = await axiosInstance.request({
         url,
@@ -20,7 +21,6 @@ const request = async (method, url, data = {}, isMultiPart) => {
     } else {
       response = await fetch(BASE_URL + url, data);
     }
-    console.log(`${url}`, data);
     // if (response.data && response.data.data.hasError)
     return response.data;
   } catch (error) {

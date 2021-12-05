@@ -6,4 +6,5 @@ export const apis = {
   ALL_ACCOUNTS_FILTER_BY_KEYWORD: 'account/filterAccountByKeyword',
   GENERAL_LEDGER: 'report/generateGeneralLedger',
   GET_BALANCE: 'account/balance',
+  ACCOUNT_HEADS: 'account/getAccountHeads'
 };
