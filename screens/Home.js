@@ -8,11 +8,13 @@ import {
     TouchableOpacity,
     Image,
     ImageBackground,
-    LogBox
+    LogBox,
+    Dimensions
 } from 'react-native';
 import  {dummyData, COLORS, SIZES, FONTS, icons, images} from "../constants";
 import {transactionHistory} from "../constants/dummy";
 import {color} from "react-native-reanimated";
+import TransactionHistory from "../components/TransactionHistory";
 
 const Home = ({ navigation }) => {
 
@@ -68,151 +70,84 @@ const Home = ({ navigation }) => {
     return (
         <ScrollView>
             <View style={{flex: 1}}>
-                <View
-                  style={{
-                      width: '100%',
-                      height: 290,
-                      ...styles.shadow
-                  }}
-                >
-                    <ImageBackground
-                      source={images.banner}
-                      resizeMode="cover"
-                      style={{
-                          flex: 1,
-                          alignItems: 'center'
-                      }}
-                    >
-                        {/* Header */}
-                        <View
-                            style={{
-                                marginTop: SIZES.padding,
-                                width: "100%",
-                                alignItems: "flex-end",
-                                paddingHorizontal: SIZES.padding
-                            }}
-                        >
-                        <TouchableOpacity
+              <View
+                style={{
+                    width: '100%',
+                    height: 290,
+                    ...styles.shadow
+                }}
+              >
+                  <ImageBackground
+                    source={images.banner}
+                    resizeMode="cover"
+                    style={{
+                        flex: 1,
+                        alignItems: 'center'
+                    }}
+                  >
+                      {/* Header */}
+                      <View
                           style={{
-                              width: 35,
-                              height: 35,
+                              marginTop: SIZES.padding,
+                              width: "100%",
+                              alignItems: "flex-end",
+                              paddingHorizontal: SIZES.padding
+                          }}
+                      >
+                      <TouchableOpacity
+                        style={{
+                            width: 35,
+                            height: 35,
+                            alignItems: 'center',
+                            justifyContent: 'center'
+                        }}
+                      >
+                          <Image
+                              source={icons.notification_white}
+                              resizeMode="contain"
+                              style={{
+                                  flex: 1,
+                              }}
+                          />
+                      </TouchableOpacity>
+                      </View>
+
+                      {/* Balance */}
+                      <View
+                          style={{
                               alignItems: 'center',
                               justifyContent: 'center'
                           }}
-                        >
-                            <Image
-                                source={icons.notification_white}
-                                resizeMode="contain"
-                                style={{
-                                    flex: 1,
-                                }}
-                            />
-                        </TouchableOpacity>
-                        </View>
-
-                        {/* Balance */}
-                        <View
-                            style={{
-                                alignItems: 'center',
-                                justifyContent: 'center'
-                            }}
-                        >
-                            <Text style={{color: COLORS.white, ...FONTS.h3}} > Your Portfolio Balance </Text>
-                            <Text style={{marginTop: SIZES.base, color: COLORS.white, ...FONTS.h1}} > $203,57.44 </Text>
-                            <Text style={{color: COLORS.white, ...FONTS.body5}} > +20% Last 24 hours </Text>
-                        </View>
-
-                        {/* Trending Section */}
-                        <View
-                            style={{
-                                position: 'absolute',
-                                bottom: '-16%'
-                            }}
-                        >
-                            <Text style={{ marginLeft: SIZES.padding, color: COLORS.white, ...FONTS.h3 }}>
-                                Accounts
-                            </Text>
-
-                            <FlatList
-                                contentContainerStyle={{ marginTop: SIZES.base}}
-                                data={trending}
-                                renderItem={renderItem}
-                                keyExtractor={item => `${item.id}`}
-                                horizontal
-                                showsHorizontalScrollIndicator={true}
-                            />
-
-                        </View>
-                    </ImageBackground>
-                </View>
-
-                <View
-                  style={{
-                    marginTop: SIZES.base * 8,
-                    marginHorizontal: SIZES.padding - 10,
-                    padding: SIZES.padding - 8,
-                    borderRadius: SIZES.radius,
-                    backgroundColor: COLORS.white,
-                    ...styles.shadow
-                  }}
-                >
-
-                  <Text style={{...FONTS.h2 }}>Transaction History</Text>
-                  <FlatList
-                    contentContainerStyle={{ marginTop: SIZES.radius }}
-                    scrollEnabled={false}
-                    data={transactionHistory}
-                    keyExtractor={item => `${item.id}`}
-                    renderItem={({item}) => (
-                      <TouchableOpacity
-                        style={{
-                          flexDirection: 'row',
-                          alignItems: 'center',
-                          paddingVertical: SIZES.base
-                        }}
-                        onPress={() => console.log(item)}
                       >
-                        <Image
-                          source={icons.transaction}
-                          style={{
-                            width: 25,
-                            height: 25,
-                            tintColor: COLORS.primary
-                          }}
-                        />
-                        <View style={{ flex: 1, marginLeft: SIZES.radius }}>
-                          <Text style={{ ...FONTS.h4,  }} >{item.description}</Text>
-                          <Text style={{ color: COLORS.gray, ...FONTS.body5 }} >{item.date}</Text>
-                        </View>
+                          <Text style={{color: COLORS.white, ...FONTS.h3}} > Your Portfolio Balance </Text>
+                          <Text style={{marginTop: SIZES.base, color: COLORS.white, ...FONTS.h1}} > $203,57.44 </Text>
+                          <Text style={{color: COLORS.white, ...FONTS.body5}} > +20% Last 24 hours </Text>
+                      </View>
 
-                        <View
+                      {/* Trending Section */}
+                      <View
                           style={{
-                            flexDirection: 'row',
-                            alignItems: 'center',
-                            height: '100%'
+                              position: 'absolute',
+                              bottom: '-16%'
                           }}
-                        >
-                          <Text style={{ color: item.type == 'B' ? COLORS.green : COLORS.black, ...FONTS.h4 }} >{item.amount} </Text>
-                          <Image
-                            source={icons.right_arrow}
-                            style={{
-                              width: 15,
-                              height: 15,
-                              tintColor: COLORS.gray
-                            }}
+                      >
+                          <Text style={{ marginLeft: SIZES.padding, color: COLORS.white, ...FONTS.h3 }}>
+                              Accounts
+                          </Text>
+
+                          <FlatList
+                              contentContainerStyle={{ marginTop: SIZES.base}}
+                              data={trending}
+                              renderItem={renderItem}
+                              keyExtractor={item => `${item.id}`}
+                              horizontal
+                              showsHorizontalScrollIndicator={true}
                           />
-                        </View>
 
-                      </TouchableOpacity>
-                    )}
-                    showVerticalScrollIndicator={false}
-                    ItemSeparatorComponent={() => {
-                      return (
-                        <View style={{ width: "100%", height: 0.5, backgroundColor: COLORS.lightGray }} />
-                      )
-                    }}
-                  />
-                </View>
+                      </View>
+                  </ImageBackground>
+              </View>
+              <TransactionHistory transactionHistory={transactionHistory} height={Dimensions.get('window').height - 510} />
             </View>
         </ScrollView>
     )
