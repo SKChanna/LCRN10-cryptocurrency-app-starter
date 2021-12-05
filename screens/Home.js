@@ -34,6 +34,7 @@ const Home = ({ navigation }) => {
             borderRadius: 10,
             backgroundColor: COLORS.white
         }}
+        onPress={() => navigation.navigate("Transaction")}
       >
           {/* Currency */}
           <View style={{flexDirection: 'row'}}>

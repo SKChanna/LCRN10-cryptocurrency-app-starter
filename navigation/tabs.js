@@ -103,7 +103,7 @@ const Tabs = () => {
                 }}
             />
             <Tab.Screen
-                name="Transaction"
+                name="Transaction1"
                 component={Home}
                 options={{
                   tabBarIcon: ({focused}) => (

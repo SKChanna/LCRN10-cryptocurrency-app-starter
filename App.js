@@ -29,12 +29,12 @@ const App = () => {
           component={Tabs}
         />
         <Stack.Screen
-          name="CryptoDetail"
-          component={CryptoDetail}
-        />
-        <Stack.Screen
           name="Transaction"
           component={Transaction}
+        />
+        <Stack.Screen
+          name="CryptoDetail"
+          component={CryptoDetail}
         />
       </Stack.Navigator>
     </NavigationContainer>
