@@ -26,13 +26,15 @@ const Home = ({ navigation }) => {
     const renderItem = ({item, index}) => (
       <TouchableOpacity
         style={{
-            width: 180,
-            paddingVertical: SIZES.padding,
-            paddingHorizontal: SIZES.padding,
+            width: 150,
+            paddingVertical: SIZES.padding - 5,
+            paddingHorizontal: SIZES.padding - 5,
             marginLeft: index === 0 ? SIZES.padding : 0,
             marginRight: SIZES.radius,
+            marginBottom: SIZES.padding - 15,
             borderRadius: 10,
-            backgroundColor: COLORS.white
+            backgroundColor: COLORS.white,
+            ...styles.shadow
         }}
         onPress={() => navigation.navigate("Transaction")}
       >
@@ -43,29 +45,29 @@ const Home = ({ navigation }) => {
                       source={item.image}
                       resizeMode="cover"
                       style={{
-                          marginTop: 5,
-                          width: 25,
-                          height: 25
+                          marginTop: 3,
+                          width: 22,
+                          height: 22
                       }}
                   />
               </View>
               <View style={{ marginLeft: SIZES.base }}>
-                  <Text style={{ ...FONTS.h2 }}>{item.currency}</Text>
-                  <Text style={{ color: COLORS.gray, ...FONTS.body3 }}>{item.code}</Text>
+                  <Text style={{ ...FONTS.h3 }}>{item.currency}</Text>
+                  <Text style={{ color: COLORS.gray, ...FONTS.body4 }}>{item.code}</Text>
               </View>
           </View>
 
           {/* Value */}
           <View style={{ marginTop: SIZES.radius }}>
-              <Text style={{ ...FONTS.h2 }}>${item.amount}</Text>
-              <Text style={{ color: item.type == 'I' ? COLORS.green : COLORS.red, ...FONTS.h3 }}>${item.amount}</Text>
+              <Text style={{ ...FONTS.h3 }}>${item.amount}</Text>
+              <Text style={{ color: item.type == 'I' ? COLORS.green : COLORS.red, ...FONTS.h4 }}>${item.amount}</Text>
           </View>
       </TouchableOpacity>
     );
 
     return (
         <ScrollView>
-            <View style={{ flex: 1, paddingBottom: 130 }}>
+            <View style={{flex: 1}}>
                 <View
                   style={{
                       width: '100%',
@@ -84,7 +86,7 @@ const Home = ({ navigation }) => {
                         {/* Header */}
                         <View
                             style={{
-                                marginTop: SIZES.padding * 2,
+                                marginTop: SIZES.padding,
                                 width: "100%",
                                 alignItems: "flex-end",
                                 paddingHorizontal: SIZES.padding
@@ -124,11 +126,11 @@ const Home = ({ navigation }) => {
                         <View
                             style={{
                                 position: 'absolute',
-                                bottom: '-30%'
+                                bottom: '-16%'
                             }}
                         >
-                            <Text style={{ marginLeft: SIZES.padding, color: COLORS.white, ...FONTS.h2 }}>
-                                Trending
+                            <Text style={{ marginLeft: SIZES.padding, color: COLORS.white, ...FONTS.h3 }}>
+                                Accounts
                             </Text>
 
                             <FlatList
@@ -146,9 +148,9 @@ const Home = ({ navigation }) => {
 
                 <View
                   style={{
-                    marginTop: SIZES.base * 12,
-                    marginHorizontal: SIZES.padding,
-                    padding: 20,
+                    marginTop: SIZES.base * 8,
+                    marginHorizontal: SIZES.padding - 10,
+                    padding: SIZES.padding - 8,
                     borderRadius: SIZES.radius,
                     backgroundColor: COLORS.white,
                     ...styles.shadow
@@ -173,29 +175,29 @@ const Home = ({ navigation }) => {
                         <Image
                           source={icons.transaction}
                           style={{
-                            width: 30,
-                            height: 30,
+                            width: 25,
+                            height: 25,
                             tintColor: COLORS.primary
                           }}
                         />
                         <View style={{ flex: 1, marginLeft: SIZES.radius }}>
-                          <Text style={{ ...FONTS.h3,  }} >{item.description}</Text>
-                          <Text style={{ color: COLORS.gray, ...FONTS.body4 }} >{item.date}</Text>
+                          <Text style={{ ...FONTS.h4,  }} >{item.description}</Text>
+                          <Text style={{ color: COLORS.gray, ...FONTS.body5 }} >{item.date}</Text>
                         </View>
 
                         <View
                           style={{
                             flexDirection: 'row',
                             alignItems: 'center',
-                            heigth: '100%'
+                            height: '100%'
                           }}
                         >
-                          <Text style={{ color: item.type == 'B' ? COLORS.green : COLORS.black, ...FONTS.h3 }} >{item.amount} {item.current}</Text>
+                          <Text style={{ color: item.type == 'B' ? COLORS.green : COLORS.black, ...FONTS.h4 }} >{item.amount} </Text>
                           <Image
                             source={icons.right_arrow}
                             style={{
-                              width: 20,
-                              height: 20,
+                              width: 15,
+                              height: 15,
                               tintColor: COLORS.gray
                             }}
                           />
@@ -206,7 +208,7 @@ const Home = ({ navigation }) => {
                     showVerticalScrollIndicator={false}
                     ItemSeparatorComponent={() => {
                       return (
-                        <View style={{ width: "100%", height: 1, backgroundColor: COLORS.lightGray }} />
+                        <View style={{ width: "100%", height: 0.5, backgroundColor: COLORS.lightGray }} />
                       )
                     }}
                   />

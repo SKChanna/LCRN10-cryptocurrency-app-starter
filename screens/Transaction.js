@@ -8,13 +8,14 @@ import {
 import {SafeAreaView} from "react-native-safe-area-context";
 import {COLORS, FONTS, icons, SIZES} from "../constants";
 import {TouchableOpacity} from "react-native-gesture-handler";
+import IoniconsIcon from "react-native-vector-icons/Ionicons";
 
 const Transaction = ({ navigation }) => {
 
     return (
         <SafeAreaView>
             {/* The Header */}
-            <View style={{ paddingHorizontal: SIZES.padding, flexDirection: 'row' }} >
+            <View style={{ paddingHorizontal: SIZES.padding, flexDirection: 'row', paddingVertical: SIZES.padding - 10 }} >
                 <View style={{ flex: 1, alignItems: 'flex-start' }} >
                     <TouchableOpacity
                       style={{
@@ -23,30 +24,21 @@ const Transaction = ({ navigation }) => {
                       }}
                       onPress={() => navigation.goBack()}
                     >
-                        <Image
-                          source={icons.back_arrow}
-                          resizeMode="contain"
-                          style={{
-                              width: 25,
-                              height: 25,
-                              tintColor: COLORS.gray
-                          }}
-                        />
-                        <Text style={{ marginLeft: SIZES.base, ...FONTS.h2 }}>Back</Text>
+                        <IoniconsIcon name="chevron-back" size={20} color={COLORS.gray} />
+                        <Text style={{ marginLeft: SIZES.base - 8, ...FONTS.h3 }}>Back</Text>
                     </TouchableOpacity>
                 </View>
                 <View
                   style={{ flex: 1, alignItems: 'flex-end' }}
                 >
-                    <TouchableOpacity>
-                        <Image
-                          source={icons.star}
-                          resizeMode="contain"
-                          style={{
-                              width: 30,
-                              height: 30
-                          }}
-                        />
+                    <TouchableOpacity
+                      style={{
+                        flexDirection: 'column',
+                        alignItems: 'center'
+                      }}
+                      onPress={() => alert("coming soon")}
+                    >
+                      <IoniconsIcon name="cloud-download" size={25} color={COLORS.gray} />
                     </TouchableOpacity>
                 </View>
             </View>
