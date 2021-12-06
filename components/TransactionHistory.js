@@ -1,9 +1,18 @@
 import {COLORS, FONTS, icons, SIZES} from "../constants";
-import {Dimensions, FlatList, Image, StyleSheet, Text, TouchableOpacity, View} from "react-native";
-import React from "react";
+import {Dimensions, FlatList, Image, StyleSheet, Text, TouchableOpacity, View, Button} from "react-native";
+import React, {useState} from "react";
 import moment from "moment";
+import Modal from "react-native-modal";
+import IoniconsIcon from 'react-native-vector-icons/Ionicons';
+import ListItem from "./ListItem";
 
 const TransactionHistory = ({ data, height }) => {
+	const [isModalVisible, setModalVisible] = useState(false);
+	const [selectedEntry, setSelectedEntry] = useState({});
+	const toggleModal = () => {
+		setModalVisible(!isModalVisible);
+	};
+
 	return (
 		<View
 			style={{
@@ -33,7 +42,10 @@ const TransactionHistory = ({ data, height }) => {
 							alignItems: 'center',
 							paddingVertical: SIZES.base
 						}}
-						onPress={() => console.log(item)}
+						onPress={() => {
+							setSelectedEntry(item);
+							toggleModal();
+						}}
 					>
 						<Image
 							source={icons.transaction}
@@ -75,6 +87,51 @@ const TransactionHistory = ({ data, height }) => {
 					)
 				}}
 			/>
+			<Modal
+				isVisible={isModalVisible}
+				coverScreen={true}
+				animationIn="fadeIn"
+				animationOut="fadeOut"
+				onModalHide={() => setSelectedEntry({})}
+			>
+				<View
+					style={{
+						backgroundColor: COLORS.white,
+						borderRadius: SIZES.radius,
+						padding: SIZES.padding - 10,
+						marginVertical: SIZES.padding
+					}}
+				>
+					<View
+						style={{
+							padding: 10
+						}}
+					>
+						{Object.entries(selectedEntry).map(([key, value]) => (
+							value != 0 && value != '' ? <ListItem name={key} color={selectedEntry.debit == 0 ? COLORS.green : COLORS.red } value={value} /> : null
+						))}
+					</View>
+					<View
+						style={{
+							alignItems: 'flex-end',
+							justifyContent: 'flex-end'
+						}}
+					>
+						<TouchableOpacity
+							onPress={() => toggleModal()}
+						>
+							<Text
+								style={{
+									color: COLORS.red,
+									...FONTS.body5
+								}}
+							>
+								close
+							</Text>
+						</TouchableOpacity>
+					</View>
+				</View>
+			</Modal>
 		</View>
 	);
 }

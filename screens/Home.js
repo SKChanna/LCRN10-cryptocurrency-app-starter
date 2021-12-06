@@ -20,7 +20,8 @@ import {generateGeneralLedger} from "../apiServices/apiController";
 import {useDispatch, useSelector} from "react-redux";
 import * as dashboardStore from '../store/dashboard';
 import {serviceGetAccountHeads} from "../apiServices/apiServices";
-
+import TextTicker from 'react-native-text-ticker'
+import IoniconsIcon from 'react-native-vector-icons/Ionicons';
 
 const Home = ({ navigation }) => {
   const dispatch = useDispatch();
@@ -83,7 +84,16 @@ const Home = ({ navigation }) => {
             </View>
             <View style={{ marginLeft: SIZES.base }}>
                 <Text style={{ ...FONTS.h3 }}>{item.accountName}</Text>
-                <Text style={{ color: COLORS.gray, ...FONTS.body5 }}>{item.accountDescription}</Text>
+              <TextTicker
+                style={{ color: COLORS.gray, ...FONTS.body5 }}
+                duration={10000}
+                loop
+                bounce
+                repeatSpacer={50}
+                marqueeDelay={1000}
+              >
+                {item.accountDescription}
+              </TextTicker>
             </View>
         </View>
 
@@ -106,8 +116,8 @@ const Home = ({ navigation }) => {
               justifyContent: 'center'
             }}
           >
-            <Text style={{marginTop: SIZES.base, color: COLORS.white, ...FONTS.h4}} > credit </Text>
-            <Text style={{marginTop: SIZES.base, color: COLORS.white, ...FONTS.h3}} > {item.credit} </Text>
+            <Text style={{marginTop: SIZES.base, color: COLORS.black, ...FONTS.h4}} > Credit </Text>
+            <Text style={{marginTop: SIZES.base, color: COLORS.black, ...FONTS.h3}} > {item.credit} </Text>
           </View>
         </View>
     </TouchableOpacity>
@@ -142,19 +152,18 @@ const Home = ({ navigation }) => {
                     >
                     <TouchableOpacity
                       style={{
-                          width: 35,
-                          height: 35,
                           alignItems: 'center',
                           justifyContent: 'center'
                       }}
                     >
-                        <Image
-                            source={icons.notification_white}
-                            resizeMode="contain"
-                            style={{
-                                flex: 1,
-                            }}
-                        />
+                        {/*<Image*/}
+                        {/*    source={icons.notification_white}*/}
+                        {/*    resizeMode="contain"*/}
+                        {/*    style={{*/}
+                        {/*        flex: 1,*/}
+                        {/*    }}*/}
+                        {/*/>*/}
+                        <IoniconsIcon name="exit" color={COLORS.white} size={35} />
                     </TouchableOpacity>
                     </View>
 
