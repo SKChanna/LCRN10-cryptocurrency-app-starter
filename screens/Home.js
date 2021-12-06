@@ -50,10 +50,6 @@ const Home = ({ navigation }) => {
     getDashboardData();
   }, []);
 
-  useEffect(() => {
-    console.log({generalAccounts});
-  }, [generalAccounts]);
-
   const renderItem = ({item, index}) => (
     <TouchableOpacity
       style={{
@@ -67,7 +63,7 @@ const Home = ({ navigation }) => {
           backgroundColor: COLORS.white,
           ...styles.shadow
       }}
-      onPress={() => navigation.navigate("Transaction")}
+      onPress={() => navigation.navigate("Transaction", {item, index})}
     >
         {/* Currency */}
         <View style={{flexDirection: 'row'}}>
@@ -102,22 +98,52 @@ const Home = ({ navigation }) => {
           <View
             style={{
               flexDirection: 'row',
-              alignItems: 'center',
-              justifyContent: 'center'
+              flex: 1
             }}
           >
-            <Text style={{marginTop: SIZES.base, color: COLORS.green, ...FONTS.h4}} > Debit </Text>
-            <Text style={{marginTop: SIZES.base, color: COLORS.green, ...FONTS.h3}} > {item.debit} </Text>
+            <View
+              style={{
+                flex: 0.4,
+                alignItems: 'flex-start',
+                justifyContent: 'flex-start'
+              }}
+            >
+              <Text style={{marginTop: SIZES.base, color: COLORS.green, ...FONTS.body5}} > Debit </Text>
+            </View>
+            <View
+              style={{
+                flex: 0.6,
+                alignItems: 'flex-end',
+                justifyContent: 'flex-end'
+              }}
+            >
+              <Text style={{marginTop: SIZES.base, color: COLORS.green, ...FONTS.h4}} > {item.debit} </Text>
+            </View>
           </View>
           <View
             style={{
               flexDirection: 'row',
-              alignItems: 'center',
-              justifyContent: 'center'
+              flex: 1
             }}
           >
-            <Text style={{marginTop: SIZES.base, color: COLORS.black, ...FONTS.h4}} > Credit </Text>
-            <Text style={{marginTop: SIZES.base, color: COLORS.black, ...FONTS.h3}} > {item.credit} </Text>
+            <View
+              style={{
+                flex: 0.4,
+                alignItems: 'flex-start',
+                justifyContent: 'flex-start'
+              }}
+            >
+              <Text style={{color: COLORS.black, ...FONTS.body5}} > Credit </Text>
+            </View>
+            <View
+              style={{
+                flex: 0.6,
+                alignItems: 'flex-end',
+                justifyContent: 'flex-end'
+              }}
+            >
+              <Text style={{color: COLORS.black, ...FONTS.h4}} > {item.credit} </Text>
+            </View>
           </View>
         </View>
     </TouchableOpacity>
@@ -211,7 +237,21 @@ const Home = ({ navigation }) => {
                     </View>
                 </ImageBackground>
             </View>
-            <TransactionHistory data={cashLedger} height={Dimensions.get('window').height - 510} />
+            <View
+              style={{
+                marginTop: SIZES.base * 8,
+                marginHorizontal: SIZES.padding - 10,
+                marginBottom: SIZES.padding,
+                padding: SIZES.padding - 8,
+                borderRadius: SIZES.radius,
+                backgroundColor: COLORS.white,
+                ...styles.shadow
+              }}
+            >
+
+              <Text style={{...FONTS.h3 }}>Latest Transactions</Text>
+              <TransactionHistory data={cashLedger} height={Dimensions.get('window').height - 510} />
+            </View>
           </View>
       </ScrollView>
   )

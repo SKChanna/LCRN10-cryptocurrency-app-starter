@@ -14,19 +14,7 @@ const TransactionHistory = ({ data, height }) => {
 	};
 
 	return (
-		<View
-			style={{
-				marginTop: SIZES.base * 8,
-				marginHorizontal: SIZES.padding - 10,
-				marginBottom: SIZES.padding,
-				padding: SIZES.padding - 8,
-				borderRadius: SIZES.radius,
-				backgroundColor: COLORS.white,
-				...styles.shadow
-			}}
-		>
-
-			<Text style={{...FONTS.h2 }}>Transaction History</Text>
+		<>
 			<FlatList
 				contentContainerStyle={{ marginTop: SIZES.radius }}
 				scrollEnabled={true}
@@ -108,7 +96,7 @@ const TransactionHistory = ({ data, height }) => {
 						}}
 					>
 						{Object.entries(selectedEntry).map(([key, value]) => (
-							value != 0 && value != '' ? <ListItem name={key} color={selectedEntry.debit == 0 ? COLORS.green : COLORS.red } value={value} /> : null
+							value != 0 && value != '' ? <ListItem key={key} name={key} color={selectedEntry.debit == 0 ? COLORS.green : COLORS.red } value={value} /> : null
 						))}
 					</View>
 					<View
@@ -132,7 +120,7 @@ const TransactionHistory = ({ data, height }) => {
 					</View>
 				</View>
 			</Modal>
-		</View>
+		</>
 	);
 }
 
