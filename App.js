@@ -4,7 +4,7 @@ import React,  {useEffect} from 'react';
 import {Provider} from 'react-redux';
 import configureStore from './store/configureStore';
 
-import { CryptoDetail, Transaction } from "./screens";
+import { Accounts, Transaction } from "./screens";
 import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from '@react-navigation/native';
 import SplashScreen from 'react-native-splash-screen'
@@ -38,7 +38,7 @@ const App = () => {
           />
           <Stack.Screen
             name="CryptoDetail"
-            component={CryptoDetail}
+            component={Accounts}
           />
         </Stack.Navigator>
       </NavigationContainer>

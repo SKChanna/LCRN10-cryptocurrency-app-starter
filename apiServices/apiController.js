@@ -7,7 +7,7 @@ import {
 import * as accounts from '../store/accounts';
 import moment from "moment";
 
-const loadAllAccounts = async ({ dispatch, filter, update }) => {
+const loadAllAccounts = async (dispatch, filter, update) => {
   dispatch(accounts.setLoading(true));
   const r = await serviceFilterAllAccounts({
     keyword: filter.keyword,
