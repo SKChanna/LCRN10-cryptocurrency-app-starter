@@ -1,6 +1,10 @@
 import request from './requests';
 import {apis} from './apis';
 
+export const serviceAddGeneralEntry = async (data) => {
+  const response = await request('post', apis.GENERAL_ENTRY);
+  return response;
+};
 export const serviceFilterAllAccounts = async (data) => {
   const response = await request(
     'post',

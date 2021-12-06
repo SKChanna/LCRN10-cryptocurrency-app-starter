@@ -54,8 +54,8 @@ const Home = ({ navigation }) => {
     <TouchableOpacity
       style={{
           width: 150,
-          paddingVertical: SIZES.padding - 5,
-          paddingHorizontal: SIZES.padding - 5,
+          paddingVertical: SIZES.padding - 20,
+          paddingHorizontal: SIZES.padding - 20,
           marginLeft: index === 0 ? SIZES.padding : 0,
           marginRight: SIZES.radius,
           marginBottom: SIZES.padding - 15,
@@ -117,7 +117,7 @@ const Home = ({ navigation }) => {
                 justifyContent: 'flex-end'
               }}
             >
-              <Text style={{marginTop: SIZES.base, color: COLORS.green, ...FONTS.h4}} > {item.debit} </Text>
+              <Text style={{marginTop: SIZES.base, color: COLORS.green, ...FONTS.h5}} > {item.debit} </Text>
             </View>
           </View>
           <View
@@ -142,7 +142,7 @@ const Home = ({ navigation }) => {
                 justifyContent: 'flex-end'
               }}
             >
-              <Text style={{color: COLORS.black, ...FONTS.h4}} > {item.credit} </Text>
+              <Text style={{color: COLORS.black, ...FONTS.h5}} > {item.credit} </Text>
             </View>
           </View>
         </View>

@@ -41,6 +41,10 @@ export const list = createSelector(
   (state) => state.entities.accounts.list,
   (list) => list,
 );
+export const listForDropDown = createSelector(
+  (state) => state.entities.accounts.list,
+  (list) => list.map((a) => ({ account: a, name: `${a.accountName}` })),
+);
 export const loading = createSelector(
   (state) => state.entities.accounts.loading,
   (loading) => loading,

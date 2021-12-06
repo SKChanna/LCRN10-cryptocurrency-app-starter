@@ -1,5 +1,5 @@
 import React,  {useEffect} from 'react';
-
+import Toast from 'react-native-toast-message';
 // Redux
 import {Provider} from 'react-redux';
 import configureStore from './store/configureStore';
@@ -20,29 +20,32 @@ const App = () => {
   }, []);
 
   return (
-    <Provider store={Store}>
-      <NavigationContainer>
-        <Stack.Navigator
-          screenOptions={{
-            headerShown: false
-          }}
-          initialRouteName={'Home'}
-        >
-          <Stack.Screen
-            name="Home"
-            component={Tabs}
-          />
-          <Stack.Screen
-            name="Transaction"
-            component={Transaction}
-          />
-          <Stack.Screen
-            name="CryptoDetail"
-            component={Accounts}
-          />
-        </Stack.Navigator>
-      </NavigationContainer>
-    </Provider>
+    <>
+      <Provider store={Store}>
+        <NavigationContainer>
+          <Stack.Navigator
+            screenOptions={{
+              headerShown: false
+            }}
+            initialRouteName={'Home'}
+          >
+            <Stack.Screen
+              name="Home"
+              component={Tabs}
+            />
+            <Stack.Screen
+              name="Transaction"
+              component={Transaction}
+            />
+            <Stack.Screen
+              name="CryptoDetail"
+              component={Accounts}
+            />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </Provider>
+      <Toast />
+    </>
   )
 }
 

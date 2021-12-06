@@ -1,5 +1,6 @@
 import axios from 'axios';
 import {BASE_URL} from './apis';
+import {Toast} from "react-native-toast-message/lib/src/Toast";
 
 const request = async (method, url, data = {}, isMultiPart) => {
   const axiosInstance = axios.create({
@@ -21,7 +22,17 @@ const request = async (method, url, data = {}, isMultiPart) => {
     } else {
       response = await fetch(BASE_URL + url, data);
     }
-    // if (response.data && response.data.data.hasError)
+    if (response.data && response.data.data.hasError) {
+      console.error(response.data.data);
+      Toast.show({
+        type: 'error',
+        text1: 'Failed',
+        text2: ' 😢',
+        position: 'bottom',
+        onPress: () => Toast.hide()
+      });
+     return false;
+    }
     return response.data;
   } catch (error) {
     console.log(`${url} Failed`, error);

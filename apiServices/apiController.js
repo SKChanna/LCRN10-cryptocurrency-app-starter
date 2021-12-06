@@ -7,17 +7,20 @@ import {
 import * as accounts from '../store/accounts';
 import moment from "moment";
 
-const loadAllAccounts = async (dispatch, filter, update) => {
-  dispatch(accounts.setLoading(true));
+const loadAllAccounts = async (dispatch = null, filter, update) => {
+  if (dispatch)
+    dispatch(accounts.setLoading(true));
   const r = await serviceFilterAllAccounts({
     keyword: filter.keyword,
     pageNo: filter.pageNo,
     pageSize: filter.pageSize,
   });
   if (r && r.data) {
-    dispatch(accounts.setList({list: r.data, update}));
+    if (dispatch)
+      dispatch(accounts.setList({list: r.data, update}));
+    return r.data;
   }
-  dispatch(accounts.setLoading(false));
+  return []
 };
 
 const generateGeneralLedger = async ({ id, accountType, start = new Date(), end = new Date()}) => {

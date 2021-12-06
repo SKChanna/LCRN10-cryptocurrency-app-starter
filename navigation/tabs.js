@@ -9,7 +9,7 @@ import {
 import { createBottomTabNavigator, BottomTabBar } from "@react-navigation/bottom-tabs"
 import LinearGradient from "react-native-linear-gradient";
 
-import {Accounts, Home} from "../screens"
+import {Accounts, Home, Payments} from "../screens"
 import { COLORS, FONTS, icons } from "../constants"
 import {NavigationContainer} from "@react-navigation/native";
 import {color} from "react-native-reanimated";
@@ -81,7 +81,7 @@ const Tabs = () => {
             />
             <Tab.Screen
                 name="PaymentsPage"
-                component={Home}
+                component={Payments}
                 options={{
                   tabBarIcon: ({focused}) => (
                     <Image
