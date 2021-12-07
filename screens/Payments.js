@@ -53,7 +53,6 @@ const Payments = ({ navigation }) => {
       }
     }
     setErrors(tempErrors);
-    console.log('temp Errors', tempErrors);
     return Object.values(tempErrors).every(x => x == false)
   }
 
@@ -84,7 +83,7 @@ const Payments = ({ navigation }) => {
         value: values.amount,
         debitAccount: values.toAccount.account.id,
         transactionId: "--",
-        description: "From "+values.fromAccount.account.id +" : "+values.fromAccount.account.accountName +" and To "+values.toAccount.account.id+" : "+values.toAccount.account.id+"  "+values.description,
+        description: "From "+values.fromAccount.account.id +" : "+values.fromAccount.account.accountName +" and To "+values.toAccount.account.id+" : "+values.toAccount.account.accountName+"  "+values.description,
         date: new Date()
       }
       setIsLoading(true);
@@ -105,187 +104,187 @@ const Payments = ({ navigation }) => {
   }
 
   return (
-      <SafeAreaView>
-          <View
+    <SafeAreaView>
+      <View
+        style={{
+          paddingTop: SIZES.padding,
+          paddingHorizontal: SIZES.padding -10
+        }}
+      >
+        <View
+          style={{
+            flexDirection: 'row'
+          }}
+        >
+          <Text
             style={{
-                paddingTop: SIZES.padding,
-                paddingHorizontal: SIZES.padding -10
+              ...FONTS.h2
             }}
           >
-            <View
-              style={{
-                flexDirection: 'row'
+            Payments
+          </Text>
+        </View>
+
+        <View style={{ padding: 10, marginTop: SIZES.padding * 2, backgroundColor: COLORS.white, borderRadius: SIZES.radius, ...styles.shadow }} >
+          <View>
+            <Text style={{ ...FONTS.body4 }} > From Account </Text>
+            <SearchableDropdown
+              onItemSelect={(item) => {
+                handleChange({fromAccount: item})
               }}
-            >
-             <Text
-               style={{
-                 ...FONTS.h2
-               }}
-             >
-               Payments
-             </Text>
-            </View>
-
-            <View style={{ padding: 10, marginTop: SIZES.padding * 2, backgroundColor: COLORS.white, borderRadius: SIZES.radius, ...styles.shadow }} >
-              <View>
-                <Text style={{ ...FONTS.body4 }} > From Account </Text>
-                <SearchableDropdown
-                  onItemSelect={(item) => {
-                    handleChange({fromAccount: item})
-                  }}
-                  // containerStyle={{ padding: SIZES.padding }}
-                  itemStyle={{
-                    padding: 10,
-                    marginTop: 2,
-                    backgroundColor: COLORS.black,
-                    borderColor: COLORS.lightGray,
+              // containerStyle={{ padding: SIZES.padding }}
+              itemStyle={{
+                padding: 10,
+                marginTop: 2,
+                backgroundColor: COLORS.black,
+                borderColor: COLORS.lightGray,
+                borderWidth: 1,
+                borderRadius: SIZES.radius,
+              }}
+              itemTextStyle={{ color: COLORS.white }}
+              itemsContainerStyle={{ maxHeight: 200 }}
+              items={data}
+              textInputProps={
+                {
+                  placeholder: values.fromAccount ? values.fromAccount.name : 'Search...',
+                  underlineColorAndroid: "transparent",
+                  style: {
+                    padding: 12,
                     borderWidth: 1,
-                    borderRadius: SIZES.radius,
-                  }}
-                  itemTextStyle={{ color: COLORS.white }}
-                  itemsContainerStyle={{ maxHeight: 200 }}
-                  items={data}
-                  textInputProps={
-                    {
-                      placeholder: values.fromAccount ? values.fromAccount.name : 'Search...',
-                      underlineColorAndroid: "transparent",
-                      style: {
-                        padding: 12,
-                        borderWidth: 1,
-                        borderColor: '#ccc',
-                        borderRadius: 5,
-                      },
-                      onTextChange: loadData
-                    }
-                  }
-                  listProps={
-                    {
-                      nestedScrollEnabled: true,
-                    }
-                  }
-                />
-                {errors.fromAccount ? (
-                  <View style={{ flexDirection: 'row', alignItems: 'flex-end' }} >
-                    <Text style={{ ...FONTS.body5, color: COLORS.red }} > required * </Text>
-                  </View>
-                ) : null}
+                    borderColor: '#ccc',
+                    borderRadius: 5,
+                  },
+                  onTextChange: loadData
+                }
+              }
+              listProps={
+                {
+                  nestedScrollEnabled: true,
+                }
+              }
+            />
+            {errors.fromAccount ? (
+              <View style={{ flexDirection: 'row', alignItems: 'flex-end' }} >
+                <Text style={{ ...FONTS.body5, color: COLORS.red }} > required * </Text>
               </View>
-              <View style={{ marginTop: SIZES.padding - 10 }} >
-                <Text style={{ ...FONTS.body4 }} > To Account </Text>
-                <SearchableDropdown
-                  onItemSelect={(item) => {
-                    handleChange({toAccount: item})
-                  }}
-                  // containerStyle={{ padding: SIZES.padding }}
-                  itemStyle={{
-                    padding: 10,
-                    marginTop: 2,
-                    backgroundColor: COLORS.black,
-                    borderColor: COLORS.lightGray,
-                    borderWidth: 1,
-                    borderRadius: SIZES.radius,
-                  }}
-                  itemTextStyle={{ color: COLORS.white }}
-                  itemsContainerStyle={{ maxHeight: 200 }}
-                  items={data}
-                  textInputProps={
-                    {
-                      placeholder: values.toAccount ? values.toAccount.name : 'Search...',
-                      underlineColorAndroid: "transparent",
-                      style: {
-                        padding: 12,
-                        borderWidth: 1,
-                        borderColor: '#ccc',
-                        borderRadius: 5,
-                      },
-                      onTextChange: loadData
-                    }
-                  }
-                  listProps={
-                    {
-                      nestedScrollEnabled: true,
-                    }
-                  }
-                />
-                {errors.toAccount ? (
-                  <View style={{ flexDirection: 'row', alignItems: 'flex-end' }} >
-                    <Text style={{ ...FONTS.body5, color: COLORS.red }} > required * </Text>
-                  </View>
-                ) : null}
-              </View>
-            </View>
-
-            <View style={{ padding: 10, marginTop: SIZES.padding, backgroundColor: COLORS.white, borderRadius: SIZES.radius, ...styles.shadow }} >
-              <View>
-                <Text style={{ ...FONTS.body4 }} > Amount </Text>
-                <TextInput
-                  style={{ ...styles.input }}
-                  placeholder="Amount here..."
-                  value={values.amount}
-                  onChangeText={(s) => handleChange({amount: s})}
-                  keyboardType="number-pad"
-                />
-                {errors.amount ? (
-                  <View style={{ flexDirection: 'row', alignItems: 'flex-end' }} >
-                    <Text style={{ ...FONTS.body5, color: COLORS.red }} > required * </Text>
-                  </View>
-                ) : null}
-              </View>
-              <View style={{ marginTop: SIZES.padding  }} >
-                <Text style={{ ...FONTS.body4 }} > Description </Text>
-                <TextInput
-                  style={{ ...styles.input }}
-                  placeholder="Description here..."
-                  value={values.description}
-                  multiline
-                  numberOfLines={5}
-                  onChangeText={(s) => handleChange({description: s})}
-                />
-              </View>
-              <View style={{ marginTop: SIZES.padding * 2 }}>
-                <Button
-                  icon="checkmark-done-circle-outline"
-                  mode="contained"
-                  onPress={handleSubmit}
-                  color={COLORS.primary}
-                  style={{
-                    borderRadius: SIZES.radius
-                  }}
-                  loading={isLoading}
-                >
-                  DONE
-                </Button>
-              </View>
-            </View>
+            ) : null}
           </View>
-      </SafeAreaView>
-    );
+          <View style={{ marginTop: SIZES.padding - 10 }} >
+            <Text style={{ ...FONTS.body4 }} > To Account </Text>
+            <SearchableDropdown
+              onItemSelect={(item) => {
+                handleChange({toAccount: item})
+              }}
+              // containerStyle={{ padding: SIZES.padding }}
+              itemStyle={{
+                padding: 10,
+                marginTop: 2,
+                backgroundColor: COLORS.black,
+                borderColor: COLORS.lightGray,
+                borderWidth: 1,
+                borderRadius: SIZES.radius,
+              }}
+              itemTextStyle={{ color: COLORS.white }}
+              itemsContainerStyle={{ maxHeight: 200 }}
+              items={data}
+              textInputProps={
+                {
+                  placeholder: values.toAccount ? values.toAccount.name : 'Search...',
+                  underlineColorAndroid: "transparent",
+                  style: {
+                    padding: 12,
+                    borderWidth: 1,
+                    borderColor: '#ccc',
+                    borderRadius: 5,
+                  },
+                  onTextChange: loadData
+                }
+              }
+              listProps={
+                {
+                  nestedScrollEnabled: true,
+                }
+              }
+            />
+            {errors.toAccount ? (
+              <View style={{ flexDirection: 'row', alignItems: 'flex-end' }} >
+                <Text style={{ ...FONTS.body5, color: COLORS.red }} > required * </Text>
+              </View>
+            ) : null}
+          </View>
+        </View>
+
+        <View style={{ padding: 10, marginTop: SIZES.padding, backgroundColor: COLORS.white, borderRadius: SIZES.radius, ...styles.shadow }} >
+          <View>
+            <Text style={{ ...FONTS.body4 }} > Amount </Text>
+            <TextInput
+              style={{ ...styles.input }}
+              placeholder="Amount here..."
+              value={values.amount}
+              onChangeText={(s) => handleChange({amount: s})}
+              keyboardType="number-pad"
+            />
+            {errors.amount ? (
+              <View style={{ flexDirection: 'row', alignItems: 'flex-end' }} >
+                <Text style={{ ...FONTS.body5, color: COLORS.red }} > required * </Text>
+              </View>
+            ) : null}
+          </View>
+          <View style={{ marginTop: SIZES.padding  }} >
+            <Text style={{ ...FONTS.body4 }} > Description </Text>
+            <TextInput
+              style={{ ...styles.input }}
+              placeholder="Description here..."
+              value={values.description}
+              multiline
+              numberOfLines={5}
+              onChangeText={(s) => handleChange({description: s})}
+            />
+          </View>
+          <View style={{ marginTop: SIZES.padding * 2 }}>
+            <Button
+              icon="checkmark-done-circle-outline"
+              mode="contained"
+              onPress={handleSubmit}
+              color={COLORS.primary}
+              style={{
+                borderRadius: SIZES.radius
+              }}
+              loading={isLoading}
+            >
+              DONE
+            </Button>
+          </View>
+        </View>
+      </View>
+    </SafeAreaView>
+  );
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center'
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  shadow: {
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 4,
     },
-    shadow: {
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 4,
-        },
-        shadowOpacity: 0.30,
-        shadowRadius: 4.65,
+    shadowOpacity: 0.30,
+    shadowRadius: 4.65,
 
-        elevation: 8,
-    },
-    input: {
-      borderColor: "gray",
-      width: "100%",
-      borderWidth: 1,
-      borderRadius: 10,
-      padding: 10,
-    },
+    elevation: 8,
+  },
+  input: {
+    borderColor: "gray",
+    width: "100%",
+    borderWidth: 1,
+    borderRadius: 10,
+    padding: 10,
+  },
 });
 
 export default Payments;

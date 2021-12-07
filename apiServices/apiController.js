@@ -44,6 +44,7 @@ const generateGeneralLedger = async ({ id, accountType, start = new Date(), end 
     data.currentBalance = tempBalance;
     data.ledger = response.data;
   }
+  console.log("before Opening ", accountType ,{...data, ledger: null});
   response = await serviceGetBalance({
     fromDate: moment(start).format("YYYY-MM-DD")+"T00:00:00",
     accountId: id,
@@ -52,7 +53,7 @@ const generateGeneralLedger = async ({ id, accountType, start = new Date(), end 
   if (response && response.data) {
     data.openingBalance = response.data[0].openingBalance;
   }
-
+  console.log("After opening ", accountType ,{...data, ledger: null, calculatedBalance: (data.openingBalance + data.currentBalance)});
   return data;
 };
 

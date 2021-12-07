@@ -22,21 +22,47 @@ const request = async (method, url, data = {}, isMultiPart) => {
     } else {
       response = await fetch(BASE_URL + url, data);
     }
-    if (response.data && response.data.data.hasError) {
-      console.error(response.data.data);
-      Toast.show({
-        type: 'error',
-        text1: 'Failed',
-        text2: ' 😢',
-        position: 'bottom',
-        onPress: () => Toast.hide()
-      });
-     return false;
+    if (!response.data || response.data.hasError) {
+      console.error(response);
+      showError({error: '', message: response.data.responseMessage});
+      return false;
     }
     return response.data;
   } catch (error) {
-    console.log(`${url} Failed`, error);
+    const {config, data} = error.response;
+    console.error("Error", {
+      request: {
+        baseURL: config.baseURL,
+        url: config.url,
+        data: config.data,
+        headers: config.headers,
+        method: config.method
+      },
+      data: {
+        error: data.error,
+        message: data.message,
+        status: data.status
+      }
+    });
+    showError(data);
     return false;
   }
 };
+
+const showError = ({ error, message }) => {
+  Toast.show({
+    type: 'error',
+    text1: 'Server Error 😢',
+    text2: 'click for details.',
+    position: 'bottom',
+    onPress: () => Toast.show({
+      type: 'error',
+      text1: error,
+      text2: message,
+      position: 'bottom',
+      onPress: () => Toast.hide()
+    })
+  });
+};
+
 export default request;
