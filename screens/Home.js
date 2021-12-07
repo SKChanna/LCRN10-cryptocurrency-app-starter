@@ -22,6 +22,8 @@ import * as dashboardStore from '../store/dashboard';
 import {serviceGetAccountHeads} from "../apiServices/apiServices";
 import TextTicker from 'react-native-text-ticker'
 import IoniconsIcon from 'react-native-vector-icons/Ionicons';
+import {roundNumber} from "../utils/index";
+import millify from "millify";
 
 const Home = ({ navigation }) => {
   const dispatch = useDispatch();
@@ -117,7 +119,7 @@ const Home = ({ navigation }) => {
                 justifyContent: 'flex-end'
               }}
             >
-              <Text style={{marginTop: SIZES.base, color: COLORS.green, ...FONTS.h5}} > {item.debit} </Text>
+              <Text style={{marginTop: SIZES.base, color: COLORS.green, ...FONTS.h5}} > {millify(roundNumber(item.debit))} </Text>
             </View>
           </View>
           <View
@@ -142,7 +144,7 @@ const Home = ({ navigation }) => {
                 justifyContent: 'flex-end'
               }}
             >
-              <Text style={{color: COLORS.black, ...FONTS.h5}} > {item.credit} </Text>
+              <Text style={{color: COLORS.black, ...FONTS.h5}} > {millify(roundNumber(item.credit))} </Text>
             </View>
           </View>
         </View>
@@ -209,9 +211,9 @@ const Home = ({ navigation }) => {
                         }}
                       >
                         <Text style={{marginTop: SIZES.base, color: COLORS.white, ...FONTS.h3}} > pkr </Text>
-                        <Text style={{marginTop: SIZES.base, color: COLORS.white, ...FONTS.h1}} > {cashCurrentBalance - cashOpeningBalance} </Text>
+                        <Text style={{marginTop: SIZES.base, color: COLORS.white, ...FONTS.h1}} > {roundNumber(cashCurrentBalance + cashOpeningBalance)} </Text>
                       </View>
-                      <Text style={{color: COLORS.white, ...FONTS.body5}} > {cashOpeningBalance} Opening Balance </Text>
+                      <Text style={{color: COLORS.white, ...FONTS.body5}} > {roundNumber(cashOpeningBalance)} Opening Balance </Text>
                     </View>
 
                     {/* Trending Section */}

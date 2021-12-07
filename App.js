@@ -9,6 +9,9 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from '@react-navigation/native';
 import SplashScreen from 'react-native-splash-screen'
 import Tabs from "./navigation/tabs";
+// react native paper
+import { Provider as PaperProvider } from 'react-native-paper';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const Stack = createStackNavigator();
 const Store = configureStore();
@@ -22,27 +25,33 @@ const App = () => {
   return (
     <>
       <Provider store={Store}>
-        <NavigationContainer>
-          <Stack.Navigator
-            screenOptions={{
-              headerShown: false
-            }}
-            initialRouteName={'Home'}
-          >
-            <Stack.Screen
-              name="Home"
-              component={Tabs}
-            />
-            <Stack.Screen
-              name="Transaction"
-              component={Transaction}
-            />
-            <Stack.Screen
-              name="CryptoDetail"
-              component={Accounts}
-            />
-          </Stack.Navigator>
-        </NavigationContainer>
+        <PaperProvider
+          settings={{
+            icon: props => <Ionicons {...props} />,
+          }}
+        >
+          <NavigationContainer>
+            <Stack.Navigator
+              screenOptions={{
+                headerShown: false
+              }}
+              initialRouteName={'Home'}
+            >
+              <Stack.Screen
+                name="Home"
+                component={Tabs}
+              />
+              <Stack.Screen
+                name="Transaction"
+                component={Transaction}
+              />
+              <Stack.Screen
+                name="CryptoDetail"
+                component={Accounts}
+              />
+            </Stack.Navigator>
+          </NavigationContainer>
+        </PaperProvider>
       </Provider>
       <Toast />
     </>

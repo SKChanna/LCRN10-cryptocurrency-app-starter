@@ -15,6 +15,7 @@ import {generateGeneralLedger} from "../apiServices/apiController";
 import TransactionHistory from "../components/TransactionHistory";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import moment from "moment";
+import {roundNumber} from "../utils";
 
 const Transaction = ({ route, navigation }) => {
     const [account, setAccount] = useState({});
@@ -176,7 +177,7 @@ const Transaction = ({ route, navigation }) => {
                           ...FONTS.h4
                         }}
                       >
-                        {openingBalance}
+                        {roundNumber(openingBalance)}
                       </Text>
                       <Text
                         style={{
@@ -205,7 +206,7 @@ const Transaction = ({ route, navigation }) => {
                           ...FONTS.h4
                         }}
                       >
-                        {currentBalance + openingBalance}
+                        {roundNumber(currentBalance + openingBalance)}
                       </Text>
                       <Text
                         style={{

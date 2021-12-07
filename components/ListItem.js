@@ -3,6 +3,7 @@ import {COLORS, FONTS, SIZES} from "../constants";
 import IoniconsIcon from "react-native-vector-icons/Ionicons";
 import React from "react";
 import moment from "moment";
+import {roundNumber} from "../utils";
 
 const ListItem = ({name, value, color}) => {
 	return (
@@ -26,7 +27,9 @@ const ListItem = ({name, value, color}) => {
 					}}
 				>
 					<Text style={{ color: COLORS.black, ...FONTS.body4 }} >{
-						name == 'date' ? moment(value).format('MMMM Do YYYY') : value
+						name == 'date' ? moment(value).format('MMMM Do YYYY') : (
+							parseFloat(value) ? roundNumber(value) : value 
+						)
 					}</Text>
 				</View>
 

@@ -5,6 +5,7 @@ import moment from "moment";
 import Modal from "react-native-modal";
 import IoniconsIcon from 'react-native-vector-icons/Ionicons';
 import ListItem from "./ListItem";
+import {roundNumber} from "../utils";
 
 const TransactionHistory = ({ data, height }) => {
 	const [isModalVisible, setModalVisible] = useState(false);
@@ -55,7 +56,7 @@ const TransactionHistory = ({ data, height }) => {
 								height: '100%'
 							}}
 						>
-							<Text style={{ color: COLORS.black, ...FONTS.h4 }} >{item.debit || item.credit} </Text>
+							<Text style={{ color: COLORS.black, ...FONTS.h4 }} >{roundNumber(item.debit || item.credit)} </Text>
 							<Image
 								source={icons.right_arrow}
 								style={{

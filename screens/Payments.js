@@ -1,11 +1,12 @@
 import React, {useEffect, useState} from 'react';
 import {
-    StyleSheet,
-    View,
-    Text,
-    TouchableOpacity, Image,
-  Button
+  StyleSheet,
+  View,
+  Text,
+  TouchableOpacity,
+  Image
 } from 'react-native';
+import { Button } from 'react-native-paper';
 import {SafeAreaView} from "react-native-safe-area-context";
 import {COLORS, defaults, FONTS, icons, SIZES} from "../constants";
 import {useSelector, useDispatch} from "react-redux";
@@ -243,13 +244,17 @@ const Payments = ({ navigation }) => {
               </View>
               <View style={{ marginTop: SIZES.padding * 2 }}>
                 <Button
+                  icon="checkmark-done-circle-outline"
+                  mode="contained"
                   onPress={handleSubmit}
-                  title="Done"
                   color={COLORS.primary}
                   style={{
                     borderRadius: SIZES.radius
                   }}
-                />
+                  loading={isLoading}
+                >
+                  DONE
+                </Button>
               </View>
             </View>
           </View>
