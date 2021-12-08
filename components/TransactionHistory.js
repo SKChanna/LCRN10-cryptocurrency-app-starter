@@ -41,7 +41,7 @@ const TransactionHistory = ({ data, height }) => {
 							style={{
 								width: 25,
 								height: 25,
-								tintColor: item.debit == 0 ? COLORS.green : COLORS.red
+								tintColor: item.credit == 0 ? COLORS.green : COLORS.red
 							}}
 						/>
 						<View style={{ flex: 1, marginLeft: SIZES.radius }}>
@@ -97,7 +97,7 @@ const TransactionHistory = ({ data, height }) => {
 						}}
 					>
 						{Object.entries(selectedEntry).map(([key, value]) => (
-							value != 0 && value != '' ? <ListItem key={key} name={key} color={selectedEntry.debit == 0 ? COLORS.green : COLORS.red } value={value} /> : null
+							value != 0 && value != '' ? <ListItem key={key} name={key} color={selectedEntry.credit == 0 ? COLORS.green : COLORS.red } value={value} /> : null
 						))}
 					</View>
 					<View

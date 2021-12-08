@@ -1,6 +1,6 @@
 const filter = {
   pageNo: 0,
-  pageSize: 11,
+  pageSize: 20,
   keyword: '',
 };
 

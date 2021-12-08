@@ -24,6 +24,7 @@ import TextTicker from 'react-native-text-ticker'
 import IoniconsIcon from 'react-native-vector-icons/Ionicons';
 import {roundNumber} from "../utils/index";
 import millify from "millify";
+import { AccountAvatar } from '../constants/images'
 
 const Home = ({ navigation }) => {
   const dispatch = useDispatch();
@@ -57,8 +58,8 @@ const Home = ({ navigation }) => {
     <TouchableOpacity
       style={{
         width: 150,
-        paddingVertical: SIZES.padding - 20,
-        paddingHorizontal: SIZES.padding - 20,
+        paddingVertical: SIZES.padding - 15,
+        paddingHorizontal: SIZES.padding - 15,
         marginLeft: index === 0 ? SIZES.padding : 0,
         marginRight: SIZES.radius,
         marginBottom: SIZES.padding - 15,
@@ -69,31 +70,45 @@ const Home = ({ navigation }) => {
       onPress={() => navigation.navigate("Transaction", {item, index})}
     >
       {/* Currency */}
-      <View style={{flexDirection: 'row'}}>
-        <View>
-          {/*<Image*/}
-          {/*    source={item.image}*/}
-          {/*    resizeMode="cover"*/}
-          {/*    style={{*/}
-          {/*        marginTop: 3,*/}
-          {/*        width: 22,*/}
-          {/*        height: 22*/}
-          {/*    }}*/}
-          {/*/>*/}
-        </View>
-        <View style={{ marginLeft: SIZES.base }}>
-          <Text style={{ ...FONTS.h3 }}>{item.accountName}</Text>
-          <TextTicker
-            style={{ color: COLORS.gray, ...FONTS.body5 }}
-            duration={10000}
-            loop
-            bounce
-            repeatSpacer={50}
-            marqueeDelay={1000}
+      <View >
+        <View style={{flexDirection: 'row', alignItems: 'center'}} >
+          <View
+            style={{
+              flex: 1,
+              alignItems: 'flex-start',
+              justifyContent: 'flex-start'
+            }}
           >
-            {item.accountDescription}
-          </TextTicker>
+            <AccountAvatar
+              id={item.id}
+              resizeMode="cover"
+              style={{
+                marginTop: 3,
+                width: 22,
+                height: 22
+              }}
+            />
+          </View>
+          <View
+            style={{
+              flex: 1,
+              alignItems: 'flex-end',
+              justifyContent: 'flex-end'
+            }}
+          >
+            <Text style={{ ...FONTS.h3 }}>{item.accountName}</Text>
+          </View>
         </View>
+        <TextTicker
+          style={{ color: COLORS.gray, ...FONTS.body5 }}
+          duration={10000}
+          loop
+          bounce
+          repeatSpacer={50}
+          marqueeDelay={1000}
+        >
+          {item.accountDescription}
+        </TextTicker>
       </View>
 
       {/* Value */}
@@ -111,7 +126,7 @@ const Home = ({ navigation }) => {
               justifyContent: 'flex-start'
             }}
           >
-            <Text style={{marginTop: SIZES.base, color: COLORS.green, ...FONTS.body5}} > Debit </Text>
+            <Text style={{marginTop: SIZES.base, color: COLORS.black, ...FONTS.body5}} > Debit </Text>
           </View>
           <View
             style={{
@@ -120,7 +135,7 @@ const Home = ({ navigation }) => {
               justifyContent: 'flex-end'
             }}
           >
-            <Text style={{marginTop: SIZES.base, color: COLORS.green, ...FONTS.h5}} > {millify(roundNumber(item.debit))} </Text>
+            <Text style={{marginTop: SIZES.base, color: COLORS.black, ...FONTS.h5}} > {millify(roundNumber(item.debit))} </Text>
           </View>
         </View>
         <View

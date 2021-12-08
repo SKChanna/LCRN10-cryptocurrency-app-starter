@@ -14,6 +14,7 @@ import {FlatList, TextInput} from "react-native-gesture-handler";
 import IoniconsIcon from "react-native-vector-icons/Ionicons";
 import moment from "moment";
 import {acc} from "react-native-reanimated";
+import {AccountAvatar} from "../constants/images";
 
 const Accounts = ({ navigation }) => {
   const [filter, setFilter] = useState({
@@ -86,7 +87,17 @@ const Accounts = ({ navigation }) => {
                   }}
                 >
                   <View style={{ flex: 0.2 }} >
-                    <IoniconsIcon name="ios-person-circle" size={50} color={COLORS.lightGray} />
+                    <AccountAvatar
+                      id={account.id}
+                      size={45}
+                      color={COLORS.lightGray}
+                      resizeMode="cover"
+                      style={{
+                        marginVertical: 5,
+                        width: 44,
+                        height: 44
+                      }}
+                    />
                   </View>
                   <View style={{ flex: 0.5 }}>
                     <Text style={{ ...FONTS.h4,  }} >{account.accountName}</Text>

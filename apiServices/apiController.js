@@ -16,6 +16,7 @@ const loadAllAccounts = async (dispatch = null, filter, update) => {
     pageSize: filter.pageSize,
   });
   if (r && r.data) {
+    console.log(r.data.length, update);
     if (dispatch)
       dispatch(accounts.setList({list: r.data, update}));
     return r.data;

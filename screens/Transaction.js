@@ -16,6 +16,7 @@ import TransactionHistory from "../components/TransactionHistory";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import moment from "moment";
 import {roundNumber} from "../utils";
+import {AccountAvatar} from "../constants/images";
 
 const Transaction = ({ route, navigation }) => {
   const [account, setAccount] = useState({});
@@ -130,7 +131,17 @@ const Transaction = ({ route, navigation }) => {
                 justifyContent: 'center'
               }}
             >
-              <IoniconsIcon name="ios-person-circle" size={50} color={COLORS.white} />
+              {/*<IoniconsIcon name="ios-person-circle" size={50} color={COLORS.white} />*/}
+              <AccountAvatar
+                id={account.id}
+                size={50}
+                color={COLORS.white}
+                resizeMode="cover"
+                style={{
+                  width: 50,
+                  height: 50
+                }}
+              />
             </View>
             <View
               style={{
