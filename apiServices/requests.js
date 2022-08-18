@@ -7,7 +7,7 @@ const request = async (method, url, data = {}, isMultiPart) => {
     baseURL: BASE_URL,
     headers: {
       Authorization:
-        'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTYzOTU3NDc1Mn0.didbfbMg7xwjz0Ni8zwXK9p6UT9PHEAuqtEiVg-fOpY',
+        'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTY0MDYxNTcyM30.7644o8-qBufoncQen0FzQb1ElT_3gLtKkUf5-yOX6Yw',
     },
   });
   try {

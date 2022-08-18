@@ -7,5 +7,8 @@ export const apis = {
   GENERAL_LEDGER: 'report/generateGeneralLedger',
   GET_BALANCE: 'account/balance',
   ACCOUNT_HEADS: 'account/getAccountHeads',
-  GENERAL_ENTRY: 'account/generalEntry/0'
+  GENERAL_ENTRY: 'account/generalEntry/0',
+  ASSETS:  'account/getAssets',
+  EQUITY: 'account/getEquity',
+  LIABILITY: 'account/getLiabilities'
 };

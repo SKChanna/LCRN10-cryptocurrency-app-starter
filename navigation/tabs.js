@@ -9,7 +9,7 @@ import {
 import { createBottomTabNavigator, BottomTabBar } from "@react-navigation/bottom-tabs"
 import LinearGradient from "react-native-linear-gradient";
 
-import {Accounts, Home, Payments} from "../screens"
+import {Accounts, BalanceSheet, Home, Payments} from "../screens"
 import { COLORS, FONTS, icons } from "../constants"
 import {NavigationContainer} from "@react-navigation/native";
 import {color} from "react-native-reanimated";
@@ -67,7 +67,7 @@ const Tabs = () => {
             />
             <Tab.Screen
                 name="BalanceSheet"
-                component={Home}
+                component={BalanceSheet}
                 options={{
                   tabBarIcon: ({focused}) => (
                     <View style={{ alignItems: 'center', justifyContent: 'center'}}>

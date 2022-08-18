@@ -1,8 +1,19 @@
 import request from './requests';
 import {apis} from './apis';
 
-export const serviceAddGeneralEntry = async (data) => {
-  const response = await request('post', apis.GENERAL_ENTRY, data);
+
+
+export const serviceGetAssets = async (data) => {
+  const response = await request('post', apis.ASSETS, data);
+  return response;
+};
+export const serviceGetLiabilities = async (data) => {
+  const response = await request('post', apis.LIABILITY, data);
+  return response;
+};
+
+export const serviceGetEquities = async (data) => {
+  const response = await request('post', apis.EQUITY, data);
   return response;
 };
 export const serviceFilterAllAccounts = async (data) => {
